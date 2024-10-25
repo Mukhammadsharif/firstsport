@@ -1,7 +1,7 @@
 import React from 'react';
 import {View, StyleSheet, TouchableOpacity, Image} from 'react-native';
-import BackIcon from '../assets/images/back_icon.png';
-import DrawerIcon from '../assets/images/drawer_icon.png';
+import BackIcon from '../images/others/back.png';
+import DrawerIcon from '../images/others/burger.png';
 import {useNavigation} from '@react-navigation/native';
 
 export default function Header({
@@ -41,12 +41,12 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
   },
   backIcon: {
-    width: 17,
-    height: 19,
+    width: 25,
+    height: 25,
     objectFit: 'contain',
   },
   drawerIcon: {
-    width: 17,
+    width: 25,
     height: 25,
     objectFit: 'contain',
   },

@@ -4,18 +4,18 @@ import {GlobalContext} from '../components/GlobalContext';
 import Header from '../components/Header';
 import {COLORS} from '../helpers/colors';
 
-export default function Master() {
+export default function Ice() {
   const {lang} = useContext(GlobalContext);
 
   const images = {
-    en: require('../images/backgrounds/en_meal.png'),
-    ru: require('../images/backgrounds/ru_meal.png'),
-    es: require('../images/backgrounds/es_meal.png'),
-    it: require('../images/backgrounds/it_meal.png'),
-    de: require('../images/backgrounds/de_meal.png'),
-    fr: require('../images/backgrounds/fr_meal.png'),
-    sw: require('../images/backgrounds/de_meal.png'),
-    pl: require('../images/backgrounds/pl_meal.png'),
+    en: require('../images/backgrounds/en_ice.png'),
+    ru: require('../images/backgrounds/ru_ice.png'),
+    es: require('../images/backgrounds/es_ice.png'),
+    it: require('../images/backgrounds/it_ice.png'),
+    de: require('../images/backgrounds/de_ice.png'),
+    fr: require('../images/backgrounds/fr_ice.png'),
+    sw: require('../images/backgrounds/de_ice.png'),
+    pl: require('../images/backgrounds/pl_ice.png'),
   };
 
   return (

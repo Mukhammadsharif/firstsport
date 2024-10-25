@@ -3,7 +3,7 @@ import {useNavigation} from '@react-navigation/native';
 import {GlobalContext} from '../components/GlobalContext';
 import {useGetRequest, usePostRequest} from '../helpers/hooks';
 import {ORDER, TRANSLATE} from '../helpers/urls';
-import BackgroundImage from '../assets/bg/cart_bg.png';
+import BackgroundImage from '../images/backgrounds/cart.png';
 import {
   Dimensions,
   Image,
@@ -15,11 +15,11 @@ import {
   View,
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import CartCard from '../components/CartCard';
+import CartItem from '../components/CartItem';
 import {currency} from '../helpers/avatars';
-import ButtonLight from '../components/ButtonLight';
-import LoadingModal from '../components/LoadingModal';
-import CartEmptyIcon from '../assets/images/cart_sad.png';
+import CustomButton from '../components/CustomButton';
+import Loading from '../components/Loading';
+import CartEmptyIcon from '../images/others/cart_empty.png';
 import Header from '../components/Header';
 import {COLORS, FONTS} from '../helpers/colors';
 
@@ -47,7 +47,7 @@ export default function Cart() {
     const {response} = await orderRequest.request();
     if (response) {
       await AsyncStorage.setItem('cartList', '');
-      navigation.navigate('Order', {qrImage: response?.res});
+      navigation.navigate('CartConfirm', {qrImage: response?.res});
       setLoading(false);
       setRefresh(!refresh);
     }
@@ -84,7 +84,7 @@ export default function Cart() {
   return (
     <SafeAreaView style={styles.safeAreaView}>
       <ImageBackground source={BackgroundImage} style={styles.imageBackground}>
-        <Header />
+        <Header background={COLORS.main} />
 
         {cart && cart.length && translations?.length ? (
           <View>
@@ -95,7 +95,7 @@ export default function Cart() {
             <View style={styles.main}>
               <ScrollView>
                 {cart.map((item, index) => (
-                  <CartCard item={item} key={index} />
+                  <CartItem item={item} key={index} />
                 ))}
 
                 <View style={styles.row}>
@@ -120,7 +120,7 @@ export default function Cart() {
             </View>
 
             <View style={{marginTop: 50}}>
-              <ButtonLight
+              <CustomButton
                 text={
                   translations.find(item => item?.en === 'Place Order')[lang]
                 }
@@ -147,7 +147,7 @@ export default function Cart() {
         )}
       </ImageBackground>
 
-      {!translations?.length || loading ? <LoadingModal /> : ''}
+      {!translations?.length || loading ? <Loading /> : ''}
     </SafeAreaView>
   );
 }
@@ -169,49 +169,38 @@ const styles = StyleSheet.create({
   scrollView: {
     padding: 20,
   },
-  header: {
-    width: '100%',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    paddingHorizontal: 20,
-    paddingVertical: 20,
-  },
-  backIcon: {
-    width: 25,
-    height: 25,
-    objectFit: 'contain',
-  },
   title: {
-    fontFamily: FONTS.extraBold,
+    fontFamily: FONTS.bold,
     color: '#FFFFFF',
     paddingTop: 50,
-    fontSize: 24,
+    fontSize: 36,
     textAlign: 'center',
     marginBottom: 30,
   },
   main: {
     width: '100%',
-    backgroundColor: COLORS.yellow,
     alignSelf: 'center',
-    paddingVertical: 40,
+    paddingBottom: 40,
   },
   row: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    width: '70%',
-    marginTop: 40,
+    width: '100%',
     alignSelf: 'center',
+    backgroundColor: '#1854AC',
+    paddingHorizontal: 40,
+    paddingVertical: 40,
   },
   priceTitle: {
-    fontFamily: FONTS.extraBold,
-    color: COLORS.drawerText,
-    fontSize: 18,
+    fontFamily: FONTS.bold,
+    color: COLORS.white,
+    fontSize: 22,
   },
   price: {
-    fontFamily: FONTS.extraBold,
-    color: COLORS.drawerText,
+    fontFamily: FONTS.interBold,
+    color: COLORS.white,
     fontSize: 18,
+    fontWeight: 'bold',
   },
   cartEmptyIcon: {
     alignSelf: 'center',

@@ -1,11 +1,13 @@
 import React, {useContext, useEffect, useState} from 'react';
-import {View, StyleSheet, Text, TouchableOpacity} from 'react-native';
+import {View, StyleSheet, Text, TouchableOpacity, Image} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {GlobalContext} from './GlobalContext';
 import {currency} from '../helpers/avatars';
 import {COLORS, FONTS} from '../helpers/colors';
+import LinearGradient from 'react-native-linear-gradient';
+import DeleteIcon from '../images/others/delete_icon.png';
 
-export default function CartCard({item}) {
+export default function CartItem({item}) {
   const {refresh, setRefresh, lang} = useContext(GlobalContext);
   const [carts, setCarts] = useState([]);
 
@@ -58,10 +60,19 @@ export default function CartCard({item}) {
   };
 
   return (
-    <View style={styles.main}>
+    <LinearGradient
+      colors={['#FFFFFF', '#0099FF']}
+      locations={[0, 0.7]}
+      style={styles.main}>
       <View style={styles.container}>
         <View style={styles.rightContainer}>
-          <Text style={styles.title}>{item?.title[lang]}</Text>
+          <View style={styles.row}>
+            <Text style={styles.title}>{item?.title[lang]}</Text>
+
+            <TouchableOpacity onPress={() => deleteItem()}>
+              <Image source={DeleteIcon} style={styles.deleteIcon} />
+            </TouchableOpacity>
+          </View>
           <View style={styles.rightFooter}>
             <View style={styles.countContainer}>
               <TouchableOpacity
@@ -76,7 +87,7 @@ export default function CartCard({item}) {
                     deleteItem();
                   }
                 }}>
-                <Text style={styles.action}>-</Text>
+                <Text style={styles.decrement}>-</Text>
               </TouchableOpacity>
 
               <Text style={styles.count}>
@@ -89,7 +100,7 @@ export default function CartCard({item}) {
               <TouchableOpacity
                 style={styles.actionContainer}
                 onPress={() => increment()}>
-                <Text style={styles.action}>+</Text>
+                <Text style={styles.increment}>+</Text>
               </TouchableOpacity>
             </View>
 
@@ -101,15 +112,13 @@ export default function CartCard({item}) {
           </View>
         </View>
       </View>
-
-      <View style={styles.line} />
-    </View>
+    </LinearGradient>
   );
 }
 
 const styles = StyleSheet.create({
   main: {
-    width: '80%',
+    width: '100%',
     alignSelf: 'center',
   },
   container: {
@@ -128,7 +137,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginTop: 10,
+    marginVertical: 15,
     width: '100%',
   },
   currency: {
@@ -138,15 +147,20 @@ const styles = StyleSheet.create({
     borderRadius: 12,
   },
   currencyText: {
-    fontFamily: FONTS.bold,
-    color: COLORS.drawerText,
-    fontSize: 16,
+    fontFamily: FONTS.interBold,
+    color: COLORS.main,
+    fontSize: 18,
+    fontWeight: 'bold',
   },
   title: {
-    fontSize: 15,
-    fontFamily: FONTS.extraBold,
+    fontSize: 18,
+    fontFamily: FONTS.regular,
     color: COLORS.black,
     marginBottom: 10,
+    borderBottomWidth: 1,
+    borderColor: COLORS.main,
+    width: '50%',
+    paddingBottom: 10,
   },
   weight: {
     fontSize: 12,
@@ -154,14 +168,30 @@ const styles = StyleSheet.create({
     marginTop: 10,
     opacity: 0.5,
   },
-  countContainer: {
+  plusContainer: {
     paddingVertical: 4,
-    paddingHorizontal: 4,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderColor: COLORS.drawerText,
+    borderBottomWidth: 1,
+    backgroundColor: COLORS.main,
+    paddingHorizontal: 6,
+    borderRadius: 25,
+  },
+  plusText: {
+    fontFamily: FONTS.interBold,
+    color: COLORS.white,
+    fontSize: 14,
+    fontWeight: 'bold',
+  },
+  countContainer: {
     justifyContent: 'space-between',
     alignItems: 'center',
     flexDirection: 'row',
-    marginLeft: 3,
-    backgroundColor: COLORS.inputBackground,
+    backgroundColor: COLORS.main,
+    paddingHorizontal: 4,
+    paddingVertical: 4,
+    borderRadius: 25,
   },
   actionContainer: {
     paddingVertical: 2,
@@ -169,16 +199,22 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  action: {
-    fontFamily: FONTS.bold,
-    fontSize: 13,
-    color: COLORS.drawerText,
-  },
   count: {
-    fontFamily: FONTS.bold,
     marginHorizontal: 15,
-    fontSize: 13,
-    color: COLORS.drawerText,
+    fontSize: 15,
+    fontFamily: FONTS.interBold,
+    color: COLORS.white,
+    fontWeight: 'bold',
+  },
+  increment: {
+    fontFamily: FONTS.interBold,
+    color: COLORS.white,
+    fontWeight: 'bold',
+  },
+  decrement: {
+    fontFamily: FONTS.interBold,
+    color: COLORS.white,
+    fontWeight: 'bold',
   },
   line: {
     width: '90%',
@@ -186,5 +222,15 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.drawerText,
     height: 1.5,
     marginTop: 10,
+  },
+  deleteIcon: {
+    width: 10,
+    height: 10,
+    zIndex: 101,
+  },
+  row: {
+    width: '100%',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
   },
 });

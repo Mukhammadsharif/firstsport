@@ -2,7 +2,7 @@ import React from 'react';
 import {StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {COLORS, FONTS} from '../helpers/colors';
 
-export default function ButtonLight({text, onPress}) {
+export default function CustomButton({text, onPress}) {
   return (
     <View style={styles.container}>
       <TouchableOpacity onPress={onPress} style={styles.button}>
@@ -23,18 +23,11 @@ const styles = StyleSheet.create({
     height: 50,
     borderRadius: 25,
     width: '80%',
-    backgroundColor: '#FFFFFF',
+    backgroundColor: '#1854AC',
     alignSelf: 'center',
-    shadowColor: '#000',
-    shadowOffset: {width: 0, height: 3}, // The shadow is at the bottom
-    shadowOpacity: 0.2,
-    shadowRadius: 3,
-    elevation: 4,
-    borderBottomWidth: 5,
-    borderBottomColor: 'rgba(0, 0, 0, 0.3)',
   },
   text: {
-    color: COLORS.drawerText,
+    color: COLORS.white,
     fontSize: 20,
     fontFamily: FONTS.bold,
     fontWeight: 'bold',

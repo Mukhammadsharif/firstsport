@@ -1,4 +1,4 @@
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useContext, useEffect, useRef, useState} from 'react';
 import {useNavigation} from '@react-navigation/native';
 import {GlobalContext} from '../components/GlobalContext';
 import {
@@ -15,13 +15,12 @@ import {
 } from 'react-native';
 import {useGetRequest} from '../helpers/hooks';
 import {TRANSLATE} from '../helpers/urls';
-import LoadingModal from '../components/LoadingModal';
-import BackgroundImage from '../assets/bg/drawer_bg.png';
-import AvatarIcon from '../assets/images/avatar_image.png';
-import AvatarModal from '../components/AvatarModal';
+import Loading from '../components/Loading';
+import BackgroundImage from '../images/backgrounds/account.png';
+import AvatarIcon from '../images/others/empty_ava.png';
+import Avatars from '../components/Avatars';
 import {avatars} from '../helpers/avatars';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import PolygonIcon from '../assets/images/polygon_down.png';
 import Header from '../components/Header';
 import {COLORS, FONTS} from '../helpers/colors';
 
@@ -52,12 +51,21 @@ export default function Account() {
     setLanguage(false);
   };
 
+  const inputRef = useRef(null);
+
+  // Function to focus the TextInput
+  const handleFocusInput = () => {
+    if (inputRef.current) {
+      inputRef.current.focus();
+    }
+  };
+
   return (
     <SafeAreaView style={styles.safeAreaView}>
       <ImageBackground source={BackgroundImage} style={styles.imageBackground}>
         {translations?.length ? (
           <View>
-            <Header />
+            <Header background={COLORS.main} />
 
             <ScrollView
               contentContainerStyle={styles.scrollView}
@@ -71,9 +79,22 @@ export default function Account() {
                   }
                   style={styles.avatarImage}
                 />
+
+                <View style={{marginTop: -30}}>
+                  <View style={styles.editButton}>
+                    <Text style={styles.editButtonText}>
+                      {
+                        translations.find(item => item?.en === 'Change avatar')[
+                          lang
+                        ]
+                      }
+                    </Text>
+                  </View>
+                </View>
               </TouchableOpacity>
 
               <TextInput
+                ref={inputRef}
                 style={styles.textInput}
                 placeholder={
                   translations.find(item => item?.en === 'Your Name')[lang]
@@ -85,6 +106,16 @@ export default function Account() {
                   AsyncStorage.setItem('name', value);
                 }}
               />
+
+              <View style={{marginTop: -10, marginRight: '-50%'}}>
+                <TouchableOpacity
+                  style={styles.editButton}
+                  onPress={handleFocusInput}>
+                  <Text style={styles.editButtonText}>
+                    {translations.find(item => item?.en === 'Change')[lang]}
+                  </Text>
+                </TouchableOpacity>
+              </View>
 
               {!language ? (
                 <TouchableOpacity
@@ -98,9 +129,6 @@ export default function Account() {
                         )[lang]
                       }
                     </Text>
-                  </View>
-                  <View>
-                    <Image source={PolygonIcon} style={styles.polygon} />
                   </View>
                 </TouchableOpacity>
               ) : (
@@ -175,11 +203,11 @@ export default function Account() {
             </ScrollView>
           </View>
         ) : (
-          <LoadingModal />
+          <Loading />
         )}
 
         {avatarModal ? (
-          <AvatarModal
+          <Avatars
             modalVisible={avatarModal}
             setModalVisible={setAvatarModal}
           />
@@ -235,7 +263,7 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     height: 50,
     marginTop: 30,
-    backgroundColor: COLORS.inputBackground,
+    backgroundColor: COLORS.white,
     textAlign: 'left',
     fontFamily: FONTS.bold,
     fontSize: 20,
@@ -252,12 +280,14 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     height: 50,
     marginTop: 30,
-    backgroundColor: COLORS.inputBackground,
+    backgroundColor: COLORS.white,
     fontFamily: FONTS.bold,
     fontSize: 20,
     borderRadius: 25,
     paddingLeft: 20,
     justifyContent: 'center',
+    position: 'absolute',
+    bottom: -(height / 3),
   },
   polygon: {
     width: 20,
@@ -272,7 +302,7 @@ const styles = StyleSheet.create({
     width: '80%',
     height: '40%',
     alignSelf: 'center',
-    backgroundColor: COLORS.yellow,
+    backgroundColor: COLORS.card,
     zIndex: 101,
     borderRadius: 20,
     borderColor: COLORS.black,
@@ -323,7 +353,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   buttonText: {
-    fontFamily: FONTS.medium,
+    fontFamily: FONTS.bold,
     fontSize: 17,
     fontWeight: '900',
     color: COLORS.black,
@@ -334,5 +364,20 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: '900',
     color: COLORS.black,
+  },
+  editButton: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 25,
+    paddingHorizontal: 10,
+    paddingVertical: 8,
+    backgroundColor: '#1854AC',
+    alignSelf: 'center',
+  },
+  editButtonText: {
+    color: COLORS.white,
+    fontSize: 14,
+    fontFamily: FONTS.bold,
+    fontWeight: 'bold',
   },
 });

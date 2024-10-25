@@ -5,9 +5,9 @@ import {GlobalProvider} from './app/components/GlobalContext';
 
 export default function App() {
   return (
-      <GlobalProvider>
-        <StatusBar />
-        <Navigation />
-      </GlobalProvider>
+    <GlobalProvider>
+      <StatusBar />
+      <Navigation />
+    </GlobalProvider>
   );
 }

@@ -8,7 +8,7 @@ import {
 } from 'react-native';
 import {COLORS} from '../helpers/colors';
 
-export default function LoadingModal({modalVisible, setModalVisible}) {
+export default function Loading({modalVisible, setModalVisible}) {
   return (
     <View style={styles.centeredView}>
       <Modal
@@ -22,7 +22,7 @@ export default function LoadingModal({modalVisible, setModalVisible}) {
           <View style={styles.modalView}>
             <ActivityIndicator
               size={'large'}
-              color={COLORS.drawerText}
+              color={COLORS.main}
               style={styles.icon}
             />
           </View>

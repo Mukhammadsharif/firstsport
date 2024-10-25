@@ -1,5 +1,5 @@
 import React, {useContext, useEffect, useState} from 'react';
-import BackgroundImage from '../assets/bg/cart_bg.png';
+import BackgroundImage from '../images/backgrounds/cart.png';
 import {
   Dimensions,
   Image,
@@ -11,12 +11,13 @@ import {
 import {GlobalContext} from '../components/GlobalContext';
 import {useGetRequest} from '../helpers/hooks';
 import {TRANSLATE} from '../helpers/urls';
-import BookConfirmIcon from '../assets/images/book_icon.png';
+import BookConfirmIcon from '../images/others/reserve_icon.png';
 import Header from '../components/Header';
-import {FONTS} from '../helpers/colors';
+import {COLORS, FONTS} from '../helpers/colors';
 
 const {width, height} = Dimensions.get('window');
-export default function BookConfirm() {
+
+export default function ReserveConfirm() {
   const {lang} = useContext(GlobalContext);
   const [translations, setTranslations] = useState([]);
   const getLanguagesRequest = useGetRequest({url: TRANSLATE});
@@ -34,7 +35,7 @@ export default function BookConfirm() {
   return (
     <SafeAreaView style={styles.safeAreaView}>
       <ImageBackground source={BackgroundImage} style={styles.imageBackground}>
-        <Header />
+        <Header background={COLORS.main} />
 
         <Image source={BookConfirmIcon} style={styles.qrImage} />
 
@@ -71,10 +72,11 @@ const styles = StyleSheet.create({
   },
   text: {
     color: '#FFFFFF',
-    fontFamily: FONTS.extraBold,
+    fontFamily: FONTS.interBold,
     fontSize: 18,
     textAlign: 'center',
     paddingHorizontal: 20,
     marginTop: 30,
+    fontWeight: 'bold',
   },
 });

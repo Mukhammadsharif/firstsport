@@ -1,5 +1,5 @@
 import React, {useContext, useEffect, useState} from 'react';
-import BackgroundImage from '../assets/bg/cart_bg.png';
+import BackgroundImage from '../images/backgrounds/cart.png';
 import {
   Dimensions,
   Image,
@@ -7,21 +7,19 @@ import {
   SafeAreaView,
   StyleSheet,
   Text,
-  TouchableOpacity,
   View,
 } from 'react-native';
-import {useNavigation} from '@react-navigation/native';
 import {GlobalContext} from '../components/GlobalContext';
 import {useGetRequest} from '../helpers/hooks';
 import {TRANSLATE} from '../helpers/urls';
 import Header from '../components/Header';
-import {FONTS} from '../helpers/colors';
+import {COLORS, FONTS} from '../helpers/colors';
 
 const {width, height} = Dimensions.get('window');
-export default function Order({route}) {
+
+export default function CartConfirm({route}) {
   const {qrImage} = route.params;
-  const navigation = useNavigation();
-  const {lang, refresh, setRefresh} = useContext(GlobalContext);
+  const {lang} = useContext(GlobalContext);
   const [translations, setTranslations] = useState([]);
   const getLanguagesRequest = useGetRequest({url: TRANSLATE});
 
@@ -38,7 +36,7 @@ export default function Order({route}) {
   return (
     <SafeAreaView style={styles.safeAreaView}>
       <ImageBackground source={BackgroundImage} style={styles.imageBackground}>
-        <Header />
+        <Header background={COLORS.main} />
 
         {qrImage ? (
           <View style={styles.qrContainer}>
@@ -111,10 +109,11 @@ const styles = StyleSheet.create({
   },
   text: {
     color: '#FFFFFF',
-    fontFamily: FONTS.extraBold,
+    fontFamily: FONTS.interBold,
     fontSize: 18,
     textAlign: 'center',
     paddingHorizontal: 40,
     marginTop: 20,
+    fontWeight: 'bold',
   },
 });

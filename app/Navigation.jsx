@@ -14,25 +14,26 @@ import {
   Image,
   ImageBackground,
 } from 'react-native';
-import Home from './screens/Home';
 import {GlobalContext} from './components/GlobalContext';
 import {useGetRequest} from './helpers/hooks';
-import {TRANSLATE} from './helpers/urls';
-import BackgroundImage from './assets/bg/drawer_bg.png';
-import HeaderImage from './assets/images/drawer_image.png';
 import {COLORS, FONTS} from './helpers/colors';
-import CloseIcon from './assets/images/icon_close.png';
-import Account from './screens/Account';
-import Cart from './screens/Cart';
-import Order from './screens/Order';
-import Broadcasts from './screens/Broadcasts';
-import Booking from './screens/Booking';
-import BookConfirm from './screens/BookConfirm';
-import Events from './screens/Events';
-import Grill from './screens/Grill';
-import Travel from './screens/Travel';
-import Golf from './screens/Golf';
-import Lunch from './screens/Lunch';
+import {TRANSLATE} from './helpers/urls';
+import BackgroundImage from './images/backgrounds/account.png';
+import HeaderImage from './images/others/logo.png';
+import CloseIcon from './images/others/close_icon.png';
+import Main from './pages/Main';
+import LinearGradient from 'react-native-linear-gradient';
+import Cart from './pages/Cart';
+import Account from './pages/Account';
+import CartConfirm from './pages/CartConfirm';
+import Translations from './pages/Translations';
+import Reserve from './pages/Reserve';
+import ReserveConfirm from './pages/ReserveConfirm';
+import Events from './pages/Events';
+import Meal from './pages/Meal';
+import Ice from './pages/Ice';
+import Football from './pages/Football';
+import Basketball from './pages/Basketball';
 
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -62,18 +63,18 @@ function DrawerNavigator() {
         headerShown: false,
       }}
       drawerContent={props => <CustomDrawerNavigator {...props} />}>
-      <Drawer.Screen name="Home" component={Home} />
-      <Drawer.Screen name="Account" component={Account} />
+      <Drawer.Screen name="Main" component={Main} />
       <Drawer.Screen name="Cart" component={Cart} />
-      <Drawer.Screen name="Order" component={Order} />
-      <Drawer.Screen name="Broadcasts" component={Broadcasts} />
-      <Drawer.Screen name="Booking" component={Booking} />
-      <Drawer.Screen name="BookConfirm" component={BookConfirm} />
+      <Drawer.Screen name="Account" component={Account} />
+      <Drawer.Screen name="CartConfirm" component={CartConfirm} />
+      <Drawer.Screen name="Translations" component={Translations} />
+      <Drawer.Screen name="Reserve" component={Reserve} />
+      <Drawer.Screen name="ReserveConfirm" component={ReserveConfirm} />
       <Drawer.Screen name="Events" component={Events} />
-      <Drawer.Screen name="Grill" component={Grill} />
-      <Drawer.Screen name="Travel" component={Travel} />
-      <Drawer.Screen name="Golf" component={Golf} />
-      <Drawer.Screen name="Lunch" component={Lunch} />
+      <Drawer.Screen name="Meal" component={Meal} />
+      <Drawer.Screen name="Ice" component={Ice} />
+      <Drawer.Screen name="Football" component={Football} />
+      <Drawer.Screen name="Basketball" component={Basketball} />
     </Drawer.Navigator>
   );
 }
@@ -111,51 +112,81 @@ function CustomDrawerNavigator(props) {
 
           <View style={styles.mainContainer}>
             <TouchableOpacity
-              onPress={() => navigation.navigate('Home')}
+              onPress={() => navigation.navigate('Main')}
               style={styles.drawerItem}>
-              <Text style={styles.itemText}>
-                {translations.find(item => item?.en === 'Home')[lang]}
-              </Text>
+              <LinearGradient
+                colors={['#0099FF', '#0C033A']}
+                locations={[0, 0.94]}
+                style={styles.gradient}>
+                <Text style={styles.itemText}>
+                  {translations.find(item => item?.en === 'Home')[lang]}
+                </Text>
+              </LinearGradient>
             </TouchableOpacity>
 
             <TouchableOpacity
-              onPress={() => navigation.navigate('Booking')}
+              onPress={() => navigation.navigate('Reserve')}
               style={styles.drawerItem}>
-              <Text style={styles.itemText}>
-                {translations.find(item => item?.en === 'Booking')[lang]}
-              </Text>
+              <LinearGradient
+                colors={['#0099FF', '#0C033A']}
+                locations={[0, 0.94]}
+                style={styles.gradient}>
+                <Text style={styles.itemText}>
+                  {translations.find(item => item?.en === 'Booking')[lang]}
+                </Text>
+              </LinearGradient>
             </TouchableOpacity>
 
             <TouchableOpacity
               onPress={() => navigation.navigate('Events')}
               style={styles.drawerItem}>
-              <Text style={styles.itemText}>
-                {translations.find(item => item?.en === 'Events')[lang]}
-              </Text>
+              <LinearGradient
+                colors={['#0099FF', '#0C033A']}
+                locations={[0, 0.94]}
+                style={styles.gradient}>
+                <Text style={styles.itemText}>
+                  {translations.find(item => item?.en === 'Events')[lang]}
+                </Text>
+              </LinearGradient>
             </TouchableOpacity>
 
             <TouchableOpacity
-              onPress={() => navigation.navigate('Broadcasts')}
+              onPress={() => navigation.navigate('Translations')}
               style={styles.drawerItem}>
-              <Text style={styles.itemText}>
-                {translations.find(item => item?.en === 'Broadcasts')[lang]}
-              </Text>
+              <LinearGradient
+                colors={['#0099FF', '#0C033A']}
+                locations={[0, 0.94]}
+                style={styles.gradient}>
+                <Text style={styles.itemText}>
+                  {translations.find(item => item?.en === 'Broadcasts')[lang]}
+                </Text>
+              </LinearGradient>
             </TouchableOpacity>
 
             <TouchableOpacity
               onPress={() => navigation.navigate('Cart')}
               style={styles.drawerItem}>
-              <Text style={styles.itemText}>
-                {translations.find(item => item?.en === 'Cart')[lang]}
-              </Text>
+              <LinearGradient
+                colors={['#0099FF', '#0C033A']}
+                locations={[0, 0.94]}
+                style={styles.gradient}>
+                <Text style={styles.itemText}>
+                  {translations.find(item => item?.en === 'Cart')[lang]}
+                </Text>
+              </LinearGradient>
             </TouchableOpacity>
 
             <TouchableOpacity
               onPress={() => navigation.navigate('Account')}
               style={styles.drawerItem}>
-              <Text style={styles.itemText}>
-                {translations.find(item => item?.en === 'Account')[lang]}
-              </Text>
+              <LinearGradient
+                colors={['#0099FF', '#0C033A']}
+                locations={[0, 0.94]}
+                style={styles.gradient}>
+                <Text style={styles.itemText}>
+                  {translations.find(item => item?.en === 'Account')[lang]}
+                </Text>
+              </LinearGradient>
             </TouchableOpacity>
           </View>
         </ImageBackground>
@@ -184,25 +215,14 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   drawerItem: {
-    backgroundColor: COLORS.yellow,
-    height: 40,
+    height: 60,
     marginTop: 15,
     width: '60%',
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderRadius: 8,
-    shadowColor: '#000',
-    shadowOffset: {width: 0, height: 3}, // The shadow is at the bottom
-    shadowOpacity: 0.2,
-    shadowRadius: 3,
-    elevation: 4,
-    borderBottomWidth: 5,
-    borderBottomColor: 'rgba(0, 0, 0, 0.3)',
   },
   itemText: {
-    fontSize: 20,
+    fontSize: 25,
     fontFamily: FONTS.bold,
-    color: COLORS.drawerText,
+    color: COLORS.white,
   },
   closeIconContainer: {
     position: 'absolute',
@@ -214,5 +234,13 @@ const styles = StyleSheet.create({
   close: {
     width: 40,
     height: 40,
+  },
+  gradient: {
+    flex: 1,
+    width: '100%',
+    height: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 12,
   },
 });

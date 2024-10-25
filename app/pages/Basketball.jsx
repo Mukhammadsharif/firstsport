@@ -4,18 +4,18 @@ import {GlobalContext} from '../components/GlobalContext';
 import Header from '../components/Header';
 import {COLORS} from '../helpers/colors';
 
-export default function Football() {
+export default function Basketball() {
   const {lang} = useContext(GlobalContext);
 
   const images = {
-    en: require('../images/backgrounds/en_football.png'),
-    ru: require('../images/backgrounds/ru_football.png'),
-    es: require('../images/backgrounds/es_football.png'),
-    it: require('../images/backgrounds/it_football.png'),
-    de: require('../images/backgrounds/de_football.png'),
-    fr: require('../images/backgrounds/fr_football.png'),
-    sw: require('../images/backgrounds/de_football.png'),
-    pl: require('../images/backgrounds/pl_football.png'),
+    en: require('../images/backgrounds/en_basketball.png'),
+    ru: require('../images/backgrounds/ru_basketball.png'),
+    es: require('../images/backgrounds/es_basketball.png'),
+    it: require('../images/backgrounds/it_basketball.png'),
+    de: require('../images/backgrounds/de_basketball.png'),
+    fr: require('../images/backgrounds/fr_basketball.png'),
+    sw: require('../images/backgrounds/de_basketball.png'),
+    pl: require('../images/backgrounds/pl_basketball.png'),
   };
 
   return (

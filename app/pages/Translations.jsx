@@ -2,7 +2,7 @@ import React, {useContext, useEffect, useState} from 'react';
 import {GlobalContext} from '../components/GlobalContext';
 import {useGetRequest} from '../helpers/hooks';
 import {BROADCASTS, TRANSLATE} from '../helpers/urls';
-import BackgroundImage from '../assets/bg/translation_bg.png';
+import BackgroundImage from '../images/backgrounds/cart.png';
 import {
   Dimensions,
   ImageBackground,
@@ -12,13 +12,13 @@ import {
   Text,
   View,
 } from 'react-native';
-import LoadingModal from '../components/LoadingModal';
+import Loading from '../components/Loading';
 import Header from '../components/Header';
 import {COLORS, FONTS} from '../helpers/colors';
 
 const {width, height} = Dimensions.get('window');
 
-export default function Broadcasts() {
+export default function Translations() {
   const {lang} = useContext(GlobalContext);
   const [translations, setTranslations] = useState([]);
   const [broadcasts, setBroadcasts] = useState([]);
@@ -48,7 +48,7 @@ export default function Broadcasts() {
   return (
     <SafeAreaView style={styles.safeAreaView}>
       <ImageBackground source={BackgroundImage} style={styles.imageBackground}>
-        <Header />
+        <Header background={COLORS.main} />
 
         {translations?.length && broadcasts?.length ? (
           <View>
@@ -60,21 +60,19 @@ export default function Broadcasts() {
               <ScrollView contentContainerStyle={styles.scrollView}>
                 {broadcasts?.map((item, index) => (
                   <View style={styles.broadcast} key={index}>
-                    <View>
+                    <View style={styles.ligaContainer}>
                       <Text style={styles.liga}>{item?.liga}</Text>
-                      <View
-                        style={{
-                          flexDirection: 'row',
-                          justifyContent: 'space-between',
-                        }}>
-                        <Text style={styles.date}>{item?.date}</Text>
-                        <Text style={styles.time}>{item?.time}</Text>
-                      </View>
                     </View>
 
-                    <View>
-                      <Text style={styles.team}>{item?.team1}</Text>
-                      <Text style={styles.team}>{item?.team2}</Text>
+                    <View style={styles.container}>
+                      <Text style={styles.team}>
+                        {item?.team1} - {item?.team2}
+                      </Text>
+
+                      <View style={styles.line} />
+
+                      <Text style={styles.date}>{item?.date}</Text>
+                      <Text style={styles.time}>{item?.time}</Text>
                     </View>
                   </View>
                 ))}
@@ -86,7 +84,7 @@ export default function Broadcasts() {
         )}
       </ImageBackground>
 
-      {!translations?.length || loading ? <LoadingModal /> : ''}
+      {!translations?.length || loading ? <Loading /> : ''}
     </SafeAreaView>
   );
 }
@@ -119,12 +117,13 @@ const styles = StyleSheet.create({
     objectFit: 'contain',
   },
   title: {
-    fontFamily: FONTS.bold,
+    fontFamily: FONTS.interBold,
     color: '#FFFFFF',
-    fontSize: 18,
+    fontSize: 25,
     textAlign: 'center',
     marginTop: 20,
     marginBottom: 20,
+    fontWeight: 'bold',
   },
   main: {
     width: '100%',
@@ -132,46 +131,61 @@ const styles = StyleSheet.create({
   },
   broadcast: {
     width: '100%',
-    backgroundColor: COLORS.yellow,
-    borderBottomWidth: 2,
-    borderTopWidth: 2,
-    borderColor: 'white',
     flexDirection: 'row',
-    justifyContent: 'space-between',
     marginTop: 15,
     paddingHorizontal: 20,
     paddingVertical: 8,
   },
+  ligaContainer: {
+    backgroundColor: COLORS.card,
+    width: 80,
+    height: 80,
+    borderRadius: 50,
+    justifyContent: 'center',
+    alignItems: 'c',
+  },
   liga: {
-    fontFamily: FONTS.medium,
-    fontSize: 17,
-    color: '#AC530A',
+    fontFamily: FONTS.interBold,
+    fontSize: 15,
+    color: COLORS.main,
     textAlign: 'center',
+    fontWeight: 'bold',
   },
   team: {
-    fontFamily: FONTS.medium,
-    fontSize: 19,
-    color: COLORS.drawerText,
+    fontFamily: FONTS.interBold,
+    fontSize: 20,
+    color: COLORS.white,
     textAlign: 'center',
+    fontWeight: 'bold',
   },
   date: {
-    fontFamily: FONTS.medium,
-    fontSize: 15,
-    color: COLORS.black,
+    fontFamily: FONTS.bold,
+    fontSize: 18,
+    color: COLORS.white,
     textAlign: 'center',
     marginTop: 10,
     paddingHorizontal: 3,
   },
   time: {
-    fontFamily: FONTS.medium,
-    fontSize: 15,
-    color: COLORS.drawerText,
+    fontFamily: FONTS.bold,
+    fontSize: 18,
+    color: COLORS.white,
     textAlign: 'center',
-    marginTop: 10,
+    marginTop: 5,
     paddingHorizontal: 3,
   },
   scrollView: {
     flexGrow: 1,
     paddingBottom: 400,
+  },
+  container: {
+    width: '80%',
+  },
+  line: {
+    height: 2,
+    width: '70%',
+    backgroundColor: COLORS.card,
+    alignSelf: 'center',
+    marginTop: 10,
   },
 });

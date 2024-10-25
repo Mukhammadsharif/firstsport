@@ -4,7 +4,7 @@ import {GlobalContext} from '../components/GlobalContext';
 import Header from '../components/Header';
 import {COLORS} from '../helpers/colors';
 
-export default function Tasty() {
+export default function Meal() {
   const {lang} = useContext(GlobalContext);
 
   const images = {

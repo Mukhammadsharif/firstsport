@@ -3,16 +3,19 @@ export const COLORS = {
   drawerText: '#810606',
   black: '#000000',
   white: '#ffffff',
-  inputBackground: '#FFA600',
+  inputBackground: '#0066FF',
+  main: '#0C033A',
+  card: '#37AFFF',
+  placeholder: '#696868',
 };
 
 export const FONTS = {
-  bold: 'MartianMono-Bold',
-  extraBold: 'MartianMono-ExtraBold',
-  extraLight: 'MartianMono-ExtraLight',
-  light: 'MartianMono-Light',
-  medium: 'MartianMono-Medium',
-  regular: 'MartianMono-Regular',
-  semiBold: 'MartianMono-SemiBold',
-  thin: 'MartianMono-Thin',
+  bold: 'AnonymousPro-Bold',
+  italic: 'AnonymousPro-Italic',
+  boldItalic: 'AnonymousPro-BoldItalic',
+  regular: 'AnonymousPro-Regular',
+  interBold: 'Inter_18pt-Bold',
+  interLight: 'Inter_18pt-Light',
+  interMedium: 'Inter_18pt-Medium',
+  interRegular: 'Inter_18pt-Regular',
 };

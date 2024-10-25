@@ -3,10 +3,9 @@ import {useNavigation} from '@react-navigation/native';
 import {GlobalContext} from '../components/GlobalContext';
 import {useGetRequest} from '../helpers/hooks';
 import {TRANSLATE} from '../helpers/urls';
-import BackgroundImage from '../assets/bg/event_bg.png';
+import BackgroundImage from '../images/backgrounds/cart.png';
 import {
   Dimensions,
-  Image,
   ImageBackground,
   SafeAreaView,
   ScrollView,
@@ -15,12 +14,54 @@ import {
   TouchableOpacity,
   View,
 } from 'react-native';
-import LoadingModal from '../components/LoadingModal';
+import Loading from '../components/Loading';
 import Header from '../components/Header';
 import {COLORS, FONTS} from '../helpers/colors';
-import CardBg from '../assets/bg/card_bg.png';
 
 const {width, height} = Dimensions.get('window');
+
+const eventLanguage = {
+  homeStyleTasty: {
+    de: 'Lecker wie zu Hause',
+    en: 'Home-style Delicious',
+    es: 'Sabor casero delicioso',
+    fr: 'Délicieux fait maison',
+    it: 'Gustoso come a casa',
+    pl: 'Smacznie jak w domu',
+    ru: 'Вкусно по-домашнему',
+    sw: 'Hemlagat god',
+  },
+  sweetMasterClass: {
+    de: 'Süßer Meisterkurs',
+    en: 'Sweet Master Class',
+    es: 'Clase maestra de dulces',
+    fr: 'Atelier de douceurs',
+    it: 'Masterclass dolce',
+    pl: 'Słodki kurs mistrzowski',
+    ru: 'Сладкий мастер-класс',
+    sw: 'Sött mästerklass',
+  },
+  youthFootballLeague: {
+    de: 'Jugendliga Fußball. Die besten Spiele 2024',
+    en: 'Youth Football League. Best Matches 2024',
+    es: 'Liga Juvenil de Fútbol. Mejores partidos 2024',
+    fr: 'Ligue de football jeunesse. Meilleurs matchs 2024',
+    it: 'Lega Giovanile di Calcio. Migliori partite 2024',
+    pl: 'Młodzieżowa Liga Piłkarska. Najlepsze mecze 2024',
+    ru: 'Юношеская футбольная лига. Лучшие матчи 2024',
+    sw: 'Ungdoms fotbollsliga. Bästa matcherna 2024',
+  },
+  basketballQuiz: {
+    de: 'Basketball-Quiz',
+    en: 'Basketball Quiz',
+    es: 'Concurso de baloncesto',
+    fr: 'Quiz de basket-ball',
+    it: 'Quiz di basket',
+    pl: 'Quiz koszykarski',
+    ru: 'Баскетбольный квиз',
+    sw: 'Basketfrågesport',
+  },
+};
 
 export default function Events() {
   const navigation = useNavigation();
@@ -43,7 +84,7 @@ export default function Events() {
   return (
     <SafeAreaView style={styles.safeAreaView}>
       <ImageBackground source={BackgroundImage} style={styles.imageBackground}>
-        <Header />
+        <Header background={COLORS.main} />
 
         {translations?.length ? (
           <View>
@@ -55,102 +96,78 @@ export default function Events() {
               <ScrollView contentContainerStyle={styles.scrollView}>
                 <TouchableOpacity
                   style={styles.broadcast}
-                  onPress={() => navigation.navigate('Grill')}>
-                  <ImageBackground source={CardBg} style={styles.bgImage}>
-                    <Text style={styles.liga}>
-                      {
-                        translations.find(
-                          item => item.en === 'Grill on the terrace',
-                        )[lang]
-                      }
-                    </Text>
+                  onPress={() => navigation.navigate('Meal')}>
+                  <Text style={styles.liga}>
+                    {eventLanguage.homeStyleTasty[lang]}
+                  </Text>
 
-                    <View
-                      style={{
-                        flexDirection: 'row',
-                        width: '40%',
-                        justifyContent: 'space-between',
-                        alignSelf: 'center',
-                      }}>
-                      <Text style={styles.team}>27/10</Text>
-                      <Text style={styles.team}>17:00</Text>
-                    </View>
-                  </ImageBackground>
+                  <View
+                    style={{
+                      flexDirection: 'row',
+                      width: '40%',
+                      justifyContent: 'space-between',
+                      alignSelf: 'center',
+                    }}>
+                    <Text style={styles.team}>27/10</Text>
+                    <Text style={styles.team}>17:00</Text>
+                  </View>
                 </TouchableOpacity>
 
                 <TouchableOpacity
                   style={styles.broadcast}
-                  onPress={() => navigation.navigate('Travel')}>
-                  <ImageBackground source={CardBg} style={styles.bgImage}>
-                    <Text style={styles.liga}>
-                      {
-                        translations.find(
-                          item => item.en === 'Travel to Italy',
-                        )[lang]
-                      }
-                    </Text>
+                  onPress={() => navigation.navigate('Ice')}>
+                  <Text style={styles.liga}>
+                    {eventLanguage.sweetMasterClass[lang]}
+                  </Text>
 
-                    <View
-                      style={{
-                        flexDirection: 'row',
-                        width: '40%',
-                        justifyContent: 'space-between',
-                        alignSelf: 'center',
-                      }}>
-                      <Text style={styles.team}>28/10</Text>
-                      <Text style={styles.team}>14:00</Text>
-                    </View>
-                  </ImageBackground>
+                  <View
+                    style={{
+                      flexDirection: 'row',
+                      width: '40%',
+                      justifyContent: 'space-between',
+                      alignSelf: 'center',
+                    }}>
+                    <Text style={styles.team}>28/10</Text>
+                    <Text style={styles.team}>14:00</Text>
+                  </View>
                 </TouchableOpacity>
 
                 <TouchableOpacity
                   style={styles.broadcast}
-                  onPress={() => navigation.navigate('Grill')}>
-                  <ImageBackground source={CardBg} style={styles.bgImage}>
-                    <Text style={styles.liga}>
-                      {
-                        translations.find(
-                          item => item.en === 'Golf competition',
-                        )[lang]
-                      }
-                    </Text>
+                  onPress={() => navigation.navigate('Football')}>
+                  <Text style={styles.liga}>
+                    {eventLanguage.youthFootballLeague[lang]}
+                  </Text>
 
-                    <View
-                      style={{
-                        flexDirection: 'row',
-                        width: '40%',
-                        justifyContent: 'space-between',
-                        alignSelf: 'center',
-                      }}>
-                      <Text style={styles.team}>28/10</Text>
-                      <Text style={styles.team}>22:00</Text>
-                    </View>
-                  </ImageBackground>
+                  <View
+                    style={{
+                      flexDirection: 'row',
+                      width: '40%',
+                      justifyContent: 'space-between',
+                      alignSelf: 'center',
+                    }}>
+                    <Text style={styles.team}>28/10</Text>
+                    <Text style={styles.team}>22:00</Text>
+                  </View>
                 </TouchableOpacity>
 
                 <TouchableOpacity
                   style={styles.broadcast}
-                  onPress={() => navigation.navigate('Lunch')}>
-                  <ImageBackground source={CardBg} style={styles.bgImage}>
-                    <Text style={styles.liga}>
-                      {
-                        translations.find(item => item.en === 'Autumn Lunch')[
-                          lang
-                        ]
-                      }
-                    </Text>
+                  onPress={() => navigation.navigate('Basketball')}>
+                  <Text style={styles.liga}>
+                    {eventLanguage.basketballQuiz[lang]}
+                  </Text>
 
-                    <View
-                      style={{
-                        flexDirection: 'row',
-                        width: '40%',
-                        justifyContent: 'space-between',
-                        alignSelf: 'center',
-                      }}>
-                      <Text style={styles.team}>29/10</Text>
-                      <Text style={styles.team}>19:00</Text>
-                    </View>
-                  </ImageBackground>
+                  <View
+                    style={{
+                      flexDirection: 'row',
+                      width: '40%',
+                      justifyContent: 'space-between',
+                      alignSelf: 'center',
+                    }}>
+                    <Text style={styles.team}>29/10</Text>
+                    <Text style={styles.team}>19:00</Text>
+                  </View>
                 </TouchableOpacity>
               </ScrollView>
             </View>
@@ -160,7 +177,7 @@ export default function Events() {
         )}
       </ImageBackground>
 
-      {!translations?.length || loading ? <LoadingModal /> : ''}
+      {!translations?.length || loading ? <Loading /> : ''}
     </SafeAreaView>
   );
 }
@@ -181,8 +198,9 @@ const styles = StyleSheet.create({
   title: {
     fontFamily: FONTS.bold,
     color: '#FFFFFF',
-    fontSize: 24,
+    fontSize: 30,
     textAlign: 'center',
+    marginTop: 30,
   },
   main: {
     width: '100%',
@@ -190,24 +208,28 @@ const styles = StyleSheet.create({
   },
   broadcast: {
     width: '100%',
-    backgroundColor: '#870C9D',
+    backgroundColor: '#071D36',
     flexDirection: 'column',
-    justifyContent: 'space-between',
     marginTop: 30,
     height: 120,
   },
   liga: {
     fontFamily: FONTS.bold,
-    fontSize: 19,
-    color: COLORS.black,
+    fontSize: 22,
+    color: COLORS.white,
     textAlign: 'center',
     marginTop: 10,
+    borderBottomWidth: 1,
+    borderColor: COLORS.card,
+    paddingBottom: 10,
+    width: '80%',
+    alignSelf: 'center',
   },
   team: {
     marginTop: 10,
-    fontFamily: FONTS.medium,
+    fontFamily: FONTS.bold,
     fontSize: 19,
-    color: COLORS.drawerText,
+    color: COLORS.white,
     textAlign: 'center',
   },
   date: {

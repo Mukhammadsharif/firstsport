@@ -4,10 +4,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import {GlobalContext} from './GlobalContext';
 import {currency} from '../helpers/avatars';
 import {COLORS, FONTS} from '../helpers/colors';
-import IncrementIcon from '../assets/images/increment_icon.png';
-import DecrementIcon from '../assets/images/decrement_icon.png';
 
-export default function FoodCard({item, translations}) {
+export default function MenuItem({item, translations}) {
   const {refresh, setRefresh, lang} = useContext(GlobalContext);
   const [added, setAdded] = useState(false);
   const [carts, setCarts] = useState([]);
@@ -139,7 +137,12 @@ export default function FoodCard({item, translations}) {
       <View style={styles.container}>
         <Image source={{uri: item?.image}} style={styles.image} />
         <View style={styles.rightContainer}>
-          <Text style={styles.title}>{item?.title[lang]}</Text>
+          <View style={styles.row}>
+            <Text style={styles.title}>{item?.title[lang]}</Text>
+            <Text style={styles.currencyText}>
+              {item?.price} {currency}
+            </Text>
+          </View>
           <Text style={styles.weight}>{item?.desc[lang]}</Text>
           <View style={styles.rightFooter}>
             {added ? (
@@ -156,7 +159,7 @@ export default function FoodCard({item, translations}) {
                       deleteItem();
                     }
                   }}>
-                  <Image source={DecrementIcon} style={styles.decrement} />
+                  <Text style={styles.decrement}>-</Text>
                 </TouchableOpacity>
 
                 <Text style={styles.count}>
@@ -169,7 +172,7 @@ export default function FoodCard({item, translations}) {
                 <TouchableOpacity
                   style={styles.actionContainer}
                   onPress={() => increment()}>
-                  <Image source={IncrementIcon} style={styles.increment} />
+                  <Text style={styles.increment}>+</Text>
                 </TouchableOpacity>
               </View>
             ) : (
@@ -181,12 +184,6 @@ export default function FoodCard({item, translations}) {
                 </Text>
               </TouchableOpacity>
             )}
-
-            <View style={styles.currency}>
-              <Text style={styles.currencyText}>
-                {item?.price} {currency}
-              </Text>
-            </View>
           </View>
         </View>
       </View>
@@ -197,10 +194,9 @@ export default function FoodCard({item, translations}) {
 const styles = StyleSheet.create({
   main: {
     width: '100%',
-    backgroundColor: COLORS.yellow,
-    marginTop: 15,
-    borderRadius: 8,
-    padding: 5,
+    backgroundColor: COLORS.card,
+    borderBottomWidth: 8,
+    borderColor: 'rgba(0, 0, 0, 0.3)',
   },
   container: {
     width: '100%',
@@ -209,13 +205,16 @@ const styles = StyleSheet.create({
   },
   image: {
     width: 120,
-    height: 70,
-    borderTopRightRadius: 35,
-    borderBottomRightRadius: 35,
+    height: '100%',
+    borderRadius: 90,
+    marginLeft: -30,
+    borderWidth: 2,
+    borderColor: COLORS.white,
   },
   rightContainer: {
     marginLeft: 10,
-    width: '70%',
+    width: '80%',
+    paddingVertical: 15,
   },
   rightFooter: {
     flexDirection: 'row',
@@ -231,20 +230,21 @@ const styles = StyleSheet.create({
     borderRadius: 50,
   },
   currencyText: {
-    fontSize: 15,
-    fontFamily: FONTS.extraBold,
+    fontSize: 20,
+    fontFamily: FONTS.interBold,
     color: COLORS.black,
+    fontWeight: 'bold',
   },
   title: {
-    fontSize: 15,
-    fontFamily: FONTS.bold,
+    fontSize: 18,
+    fontFamily: FONTS.interBold,
     color: COLORS.black,
-    width: '100%',
+    fontWeight: 'bold',
   },
   weight: {
-    fontSize: 11,
-    fontFamily: FONTS.bold,
-    color: COLORS.black,
+    fontSize: 13,
+    fontFamily: FONTS.regular,
+    color: COLORS.main,
     marginTop: 5,
     width: '100%',
     paddingRight: 20,
@@ -255,16 +255,24 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderColor: COLORS.drawerText,
     borderBottomWidth: 1,
+    backgroundColor: COLORS.main,
+    paddingHorizontal: 6,
+    borderRadius: 25,
   },
   plusText: {
-    fontFamily: FONTS.regular,
-    color: COLORS.drawerText,
-    fontSize: 12,
+    fontFamily: FONTS.interBold,
+    color: COLORS.white,
+    fontSize: 14,
+    fontWeight: 'bold',
   },
   countContainer: {
     justifyContent: 'space-between',
     alignItems: 'center',
     flexDirection: 'row',
+    backgroundColor: COLORS.main,
+    paddingHorizontal: 4,
+    paddingVertical: 4,
+    borderRadius: 25,
   },
   actionContainer: {
     paddingVertical: 2,
@@ -273,19 +281,26 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   count: {
-    fontFamily: FONTS.extraBold,
-    color: COLORS.drawerText,
     marginHorizontal: 15,
     fontSize: 15,
+    fontFamily: FONTS.interBold,
+    color: COLORS.white,
+    fontWeight: 'bold',
   },
   increment: {
-    width: 15,
-    height: 15,
-    objectFit: 'contain',
+    fontFamily: FONTS.interBold,
+    color: COLORS.white,
+    fontWeight: 'bold',
   },
   decrement: {
-    width: 15,
-    height: 15,
-    objectFit: 'contain',
+    fontFamily: FONTS.interBold,
+    color: COLORS.white,
+    fontWeight: 'bold',
+  },
+  row: {
+    width: '90%',
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
   },
 });

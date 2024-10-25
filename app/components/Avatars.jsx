@@ -13,8 +13,9 @@ import {GlobalContext} from './GlobalContext';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {COLORS} from '../helpers/colors';
 
-export default function AvatarModal({modalVisible, setModalVisible}) {
+export default function Avatars({modalVisible, setModalVisible}) {
   const {avatar, setAvatar} = useContext(GlobalContext);
+  const avatarArray = [1, 4, 7, 10, 13];
 
   const setNewAvatar = name => {
     AsyncStorage.setItem('avatar', name).then(r => console.log(r));
@@ -39,18 +40,16 @@ export default function AvatarModal({modalVisible, setModalVisible}) {
                 {avatars?.map((item, index) => (
                   <TouchableOpacity
                     key={index}
-                    style={
-                      avatar === item?.name
-                        ? styles.avatarContainerActive
-                        : styles.avatarContainer
-                    }
+                    style={styles.avatarContainer}
                     onPress={() => setNewAvatar(item?.name)}>
-                    {avatar === item?.name ? (
-                      <View style={styles.circle} />
-                    ) : (
-                      ''
-                    )}
-                    <Image source={item.image} style={styles.avatarImage} />
+                    <Image
+                      source={item.image}
+                      style={
+                        avatarArray.includes(index)
+                          ? styles.avatarSelectedImage
+                          : styles.avatarImage
+                      }
+                    />
                   </TouchableOpacity>
                 ))}
               </ScrollView>
@@ -96,7 +95,7 @@ const styles = StyleSheet.create({
     width: '100%',
     height: '80%',
     alignSelf: 'center',
-    backgroundColor: COLORS.yellow,
+    backgroundColor: COLORS.card,
     zIndex: 101,
     borderRadius: 20,
     borderColor: COLORS.black,
@@ -116,6 +115,11 @@ const styles = StyleSheet.create({
   avatarImage: {
     width: Dimensions.get('window').width / 5,
     height: Dimensions.get('window').width / 5,
+    objectFit: 'contain',
+  },
+  avatarSelectedImage: {
+    width: Dimensions.get('window').width / 3.7,
+    height: Dimensions.get('window').width / 3.7,
     objectFit: 'contain',
   },
   avatarContainer: {

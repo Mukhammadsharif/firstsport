@@ -3,27 +3,25 @@ import {useNavigation} from '@react-navigation/native';
 import {GlobalContext} from '../components/GlobalContext';
 import {useGetRequest, usePostRequest} from '../helpers/hooks';
 import {BOOKING, TRANSLATE} from '../helpers/urls';
-import BackgroundImage from '../assets/bg/translation_bg.png';
+import BackgroundImage from '../images/backgrounds/cart.png';
 import {
   Dimensions,
-  Image,
   ImageBackground,
   SafeAreaView,
   ScrollView,
   StyleSheet,
   Text,
   TextInput,
-  TouchableOpacity,
   View,
 } from 'react-native';
-import ButtonLight from '../components/ButtonLight';
-import LoadingModal from '../components/LoadingModal';
+import CustomButton from '../components/CustomButton';
+import Loading from '../components/Loading';
 import Header from '../components/Header';
 import {COLORS, FONTS} from '../helpers/colors';
 
 const {width, height} = Dimensions.get('window');
 
-export default function Booking() {
+export default function Reserve() {
   const navigation = useNavigation();
   const {lang} = useContext(GlobalContext);
   const [translations, setTranslations] = useState([]);
@@ -42,7 +40,7 @@ export default function Booking() {
     setLoading(true);
     const {response} = await bookingRequest.request();
     if (response) {
-      navigation.navigate('BookConfirm');
+      navigation.navigate('ReserveConfirm');
       setLoading(false);
     }
   };
@@ -54,7 +52,7 @@ export default function Booking() {
   return (
     <SafeAreaView style={styles.safeAreaView}>
       <ImageBackground source={BackgroundImage} style={styles.imageBackground}>
-        <Header />
+        <Header background={COLORS.main} />
 
         {translations?.length ? (
           <View>
@@ -66,7 +64,7 @@ export default function Booking() {
               <ScrollView>
                 <TextInput
                   style={styles.textInput}
-                  placeholderTextColor={COLORS.drawerText}
+                  placeholderTextColor={COLORS.placeholder}
                   placeholder={
                     translations.find(item => item?.en === 'Your Name')[lang]
                   }
@@ -74,23 +72,7 @@ export default function Booking() {
 
                 <TextInput
                   style={styles.textInput}
-                  placeholderTextColor={COLORS.drawerText}
-                  placeholder={
-                    translations.find(item => item?.en === 'Select time')[lang]
-                  }
-                />
-
-                <TextInput
-                  style={styles.textInput}
-                  placeholderTextColor={COLORS.drawerText}
-                  placeholder={
-                    translations.find(item => item?.en === 'Select date')[lang]
-                  }
-                />
-
-                <TextInput
-                  style={styles.textInput}
-                  placeholderTextColor={COLORS.drawerText}
+                  placeholderTextColor={COLORS.placeholder}
                   placeholder={
                     translations.find(item => item?.en === 'E-mail')[lang]
                   }
@@ -98,19 +80,37 @@ export default function Booking() {
 
                 <TextInput
                   style={styles.textInput}
-                  placeholderTextColor={COLORS.drawerText}
+                  placeholderTextColor={COLORS.placeholder}
                   placeholder={
                     translations.find(item => item?.en === 'Your phone')[lang]
                   }
                 />
-              </ScrollView>
-            </View>
 
-            <View style={{marginTop: 50}}>
-              <ButtonLight
-                text={translations.find(item => item?.en === 'Book now')[lang]}
-                onPress={() => booking()}
-              />
+                <TextInput
+                  style={styles.textInput}
+                  placeholderTextColor={COLORS.placeholder}
+                  placeholder={
+                    translations.find(item => item?.en === 'Select time')[lang]
+                  }
+                />
+
+                <TextInput
+                  style={styles.textInput}
+                  placeholderTextColor={COLORS.placeholder}
+                  placeholder={
+                    translations.find(item => item?.en === 'Select date')[lang]
+                  }
+                />
+              </ScrollView>
+
+              <View style={{marginTop: 50}}>
+                <CustomButton
+                  text={
+                    translations.find(item => item?.en === 'Book now')[lang]
+                  }
+                  onPress={() => booking()}
+                />
+              </View>
             </View>
           </View>
         ) : (
@@ -118,7 +118,7 @@ export default function Booking() {
         )}
       </ImageBackground>
 
-      {!translations?.length || loading ? <LoadingModal /> : ''}
+      {!translations?.length || loading ? <Loading /> : ''}
     </SafeAreaView>
   );
 }
@@ -139,26 +139,27 @@ const styles = StyleSheet.create({
     fontFamily: FONTS.bold,
     color: '#FFFFFF',
     padding: 50,
-    fontSize: 18,
+    fontSize: 30,
     textAlign: 'center',
+    fontWeight: 'bold',
   },
   main: {
     width: '100%',
-    backgroundColor: COLORS.yellow,
+    backgroundColor: COLORS.card,
     alignSelf: 'center',
     paddingHorizontal: 20,
     paddingVertical: 40,
   },
   textInput: {
     height: 45,
-    backgroundColor: COLORS.inputBackground,
+    backgroundColor: COLORS.white,
     width: '90%',
     alignSelf: 'center',
     marginTop: 10,
     borderRadius: 25,
     paddingLeft: 20,
-    fontSize: 20,
-    fontFamily: FONTS.medium,
+    fontSize: 15,
+    fontFamily: FONTS.interMedium,
     marginBottom: 10,
   },
 });
